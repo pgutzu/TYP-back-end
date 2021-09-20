@@ -17,6 +17,10 @@ const swaggerOptions = {
   },
   apis: ["./routes/*.js"],
 };
+const db = require("./config/database");
+db.authenticate()
+  .then(() => console.log("DB connected!"))
+  .catch((err) => console.log(err));
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
@@ -35,6 +39,8 @@ app.use(function (req, res, next) {
   );
   next();
 });
+
+db.sync({force: true})
 
 app.listen(port, () => console.log(`Server started on PORT ${port}`));
 
