@@ -4,8 +4,24 @@ require("dotenv").config();
 const port = process.env.PORT || 3000;
 const routes = require("./routes/index");
 const bodyParser = require("body-parser");
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: "TYP API",
+      description: "Track Your Progress API",
+      servers: ["http://localhost:3000"],
+      version: "1.0.1",
+    },
+  },
+  apis: ["./routes/*.js"],
+};
 
-app.use(bodyParser.json()); 
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+app.use(bodyParser.json());
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
