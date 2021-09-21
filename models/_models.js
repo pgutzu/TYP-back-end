@@ -15,20 +15,6 @@ Users.hasOne(Students);
 Students.belongsTo(Users, { foreignKey: "user_id" });
 
 // create fake data
-Users.sync({ force: true }).then(function () {
-  return Users.create({
-    login: "test@gmail.com",
-    password: "test",
-    isAdmin: true,
-  });
-});
-
-Students.sync({ force: true }).then(function () {
-  return Students.create({
-    fullName: "test test",
-    user_id: "1",
-  });
-});
 
 // Statuses.sync({ force: true}).then(function () {
 //     return Statuses.create({
