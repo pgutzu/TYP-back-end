@@ -3,6 +3,7 @@ const app = express();
 require("dotenv").config();
 const port = process.env.PORT || 3000;
 const routes = require("./routes/index");
+const db = require("./config/database");
 const bodyParser = require("body-parser");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
@@ -17,10 +18,6 @@ const swaggerOptions = {
   },
   apis: ["./routes/*.js"],
 };
-const db = require("./config/database");
-db.authenticate()
-  .then(() => console.log("DB connected!"))
-  .catch((err) => console.log(err));
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
@@ -40,9 +37,21 @@ app.use(function (req, res, next) {
   next();
 });
 
-db.sync({force: true})
-
 app.listen(port, () => console.log(`Server started on PORT ${port}`));
+
+// db.sync({ force: true });
+
+console.table([
+  { name: "SERVER PORT", value: port },
+  { name: "DB_PORT", value: process.env.DB_PORT },
+  { name: "DB_HOST", value: process.env.HOST },
+  { name: "DB_NAME", value: process.env.DATABASE },
+  { name: "DB_USER", value: process.env.DB_USER },
+]);
+
+db.authenticate()
+  .then(() => console.log("DB connected!"))
+  .catch((err) => console.log(err));
 
 app.use("/api", routes);
 

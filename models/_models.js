@@ -11,17 +11,10 @@ const StudentTasks = require("./studentTasks");
 const Students = require("./students");
 const Laudatories = require("./laudatories");
 
+Users.hasOne(Students);
+Students.belongsTo(Users, { foreignKey: "user_id" });
 
 // create fake data
-// Users.sync({ force: true }).then(function () {
-//   return Users.create({
-//     login: "example@gmail.com",
-//     password: "sobaka",
-//     firstName: "Kiryl",
-//     lastName: "Sachuk",
-//     isAdmin: true,
-//   });
-// });
 
 // Statuses.sync({ force: true}).then(function () {
 //     return Statuses.create({
@@ -102,7 +95,7 @@ const _models = {
   StudentTasks,
   Tasks,
   Topics,
-  Users
+  Users,
 };
 
 module.exports = _models;

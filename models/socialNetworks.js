@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
 
+
 const SocialNetworks = db.define("socialNetworks", {
   id: {
     type: Sequelize.INTEGER,
