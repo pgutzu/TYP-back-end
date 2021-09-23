@@ -14,6 +14,26 @@ const Laudatories = require("./laudatories");
 Users.hasOne(Students);
 Students.belongsTo(Users, { foreignKey: "user_id" });
 
+Students.hasMany(SocialNetworks, { foreignKey: "student_id" });
+SocialNetworks.belongsTo(Students, { foreignKey: "student_id" });
+
+Statuses.hasOne(StudentTasks);
+StudentTasks.belongsTo(Statuses, { foreignKey: "status_id" });
+
+Students.belongsToMany(Tasks, { through: "studentTasks" });
+Tasks.belongsToMany(Students, { through: "studentTasks" });
+
+Students.belongsToMany(Modules, { through: "studentModules" });
+Modules.belongsToMany(Students, { through: "studentModules" });
+
+Modules.hasMany(Checklists, { foreignKey: "module_id" });
+Checklists.belongsTo(Modules, { foreignKey: "module_id" });
+
+Checklists.hasMany(Topics, { foreignKey: "module_id" });
+Topics.belongsTo(Checklists, { foreignKey: "module_id" });
+
+Topics.hasMany(Tasks, {foreignKey: 'topic_id'});
+Tasks.belongsTo(Topics, {foreignKey: 'topic_id'})
 // create fake data
 
 // Statuses.sync({ force: true}).then(function () {
