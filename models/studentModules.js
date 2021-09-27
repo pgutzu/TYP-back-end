@@ -3,14 +3,14 @@ const db = require("../config/database");
 const Modules = require("./modules");
 const Students = require("./students");
 
-const StudentModules = db.define("usersModules", {
+const StudentModules = db.define("studentModules", {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
     primaryKey: true,
     autoIncrement: true,
   },
-  module_id: {
+  moduleId: {
     type: Sequelize.INTEGER,
     references: {
       model: Modules,
@@ -18,7 +18,7 @@ const StudentModules = db.define("usersModules", {
     },
     allowNull: false,
   },
-  student_id: {
+  studentId: {
     type: Sequelize.INTEGER,
     references: {
       model: Students,
