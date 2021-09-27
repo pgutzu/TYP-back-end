@@ -17,6 +17,11 @@ const generateAceessToken = (login, id, isAdmin) => {
   };
   return jwt.sign(payload, process.env.SECRET_PHRASE);
 };
+const loginFailed = {
+  isAuth: false,
+  message: "Error: введены неверные данные",
+  token: null,
+};
 
 class UserServices {
   async register(body) {
@@ -78,7 +83,7 @@ class UserServices {
         where: { login },
       });
       if (!user) {
-        res("User undefined");
+        rej(loginFailed);
       } else {
         console.log(user.dataValues.password);
         const validPassword = bcrypt.compare(
@@ -91,9 +96,13 @@ class UserServices {
                 user.dataValues.id,
                 user.dataValues.isAdmin
               );
-              res(token);
+              res({
+                isAuth: true,
+                message: 'Success',
+                token
+              });
             } else {
-              rej("wrong password");
+              rej(loginFailed);
             }
           }
         );
