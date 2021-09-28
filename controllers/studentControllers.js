@@ -25,6 +25,11 @@ class StudentControllers {
     const student = await StudentServices.getStudentById(id);
     return student;
   }
+
+  async getFullData(id) {
+    const data = await StudentServices.getFullData(id);
+    return data;
+  }
 }
 
 module.exports = new StudentControllers();

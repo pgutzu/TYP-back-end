@@ -1,121 +1,144 @@
-const Checklists = require("./checklists");
 const Modules = require("./modules");
 const SocialNetworks = require("./socialNetworks");
-const Statuses = require("./statuses");
-const Tasks = require("./tasks");
-const Topics = require("./topics");
-const ChecklistsTopics = require("./checklistsTopics");
 const Users = require("./users");
 const StudentModules = require("./studentModules");
-const StudentTasks = require("./studentTasks");
 const Students = require("./students");
-const Laudatories = require("./laudatories");
+// const Checklists = require("./checklists");
+// const Statuses = require("./statuses");
+// const Tasks = require("./tasks");
+// const Topics = require("./topics");
+// const ChecklistsTopics = require("./checklistsTopics");
+// const StudentTasks = require("./studentTasks");
+// const Laudatories = require("./laudatories");
 
-Users.hasOne(Students);
+Users.hasOne(Students, { foreignKey: "user_id" });
 Students.belongsTo(Users, { foreignKey: "user_id" });
 
-Students.hasMany(SocialNetworks, { foreignKey: "student_id" });
+Students.hasOne(SocialNetworks, { foreignKey: "student_id" });
 SocialNetworks.belongsTo(Students, { foreignKey: "student_id" });
 
-Statuses.hasOne(StudentTasks);
-StudentTasks.belongsTo(Statuses, { foreignKey: "status_id" });
+Students.belongsToMany(Modules, {
+  through: "studentModules",
+});
+Modules.belongsToMany(Students, {
+  through: "studentModules",
+});
 
-Students.belongsToMany(Tasks, { through: "studentTasks" });
-Tasks.belongsToMany(Students, { through: "studentTasks" });
+// Statuses.hasMany(StudentTasks, { foreignKey: "status_id" });
+// StudentTasks.belongsTo(Statuses);
 
-Students.belongsToMany(Modules, { through: "studentModules" });
-Modules.belongsToMany(Students, { through: "studentModules" });
+// Students.belongsToMany(Tasks, { through: "studentTasks" });
+// Tasks.belongsToMany(Students, { through: "studentTasks" });
 
-Modules.hasMany(Checklists, { foreignKey: "module_id" });
-Checklists.belongsTo(Modules, { foreignKey: "module_id" });
+// Modules.hasMany(Checklists, { foreignKey: "module_id" });
+// Checklists.belongsTo(Modules);
 
-Checklists.hasMany(Topics, { foreignKey: "module_id" });
-Topics.belongsTo(Checklists, { foreignKey: "module_id" });
+// Checklists.belongsToMany(Topics, { through: "checklistsTopics" });
+// Topics.belongsToMany(Checklists, { through: "checklistsTopics" });
 
-Topics.hasMany(Tasks, {foreignKey: 'topic_id'});
-Tasks.belongsTo(Topics, {foreignKey: 'topic_id'})
-// create fake data
+// Topics.hasMany(Tasks, { foreignKey: "topic_id" });
+// Tasks.belongsTo(Topics);
 
-// Statuses.sync({ force: true}).then(function () {
-//     return Statuses.create({
-//         text: 'Pending'
-//     })
-// })
+//____________________________________create fake data
 
-// Modules.sync({ force: true }).then(function () {
-//   return Modules.create({
-//     title: "React",
-//     color: "#0000FF",
+// Users.sync({ force: true }).then(async () => {
+//   await Users.create({
+//     login: "Vasya",
+//     password: "Vasya",
+//     isAdmin: false,
 //   });
 // });
 
-// Tasks.sync({ force: true }).then(function () {
-//   return Tasks.create({
-//     module_id: 1,
-//     title: "Задача 2",
-//     description: `Тролли атакуют ваш раздел комментариев!`,
-//   });
-// });
-
-// UserTasks.sync({force: true}).then(function() {
-//     return UserTasks.create({
-//         user_id: 1,
-//         task_id: 1,
-//         status_id: 1,
-//         link_github: "https://github.com/ownfrezzy/todo/blob/master/services/todo.services.js#L38"
-//     })
-// })
-
-// SocialNetworks.sync({ force: true }).then(function () {
-//   return SocialNetworks.create({
-//     telegram: "@liriksachuk",
-//     instagram: "@liriksachuk",
+// Students.sync({ force: true }).then(async () => {
+//   await Students.create({
+//     fullName: "Vasya Vlazhniy",
 //     user_id: 1,
 //   });
 // });
 
-// Themes.sync({ force: true }).then(function () {
-//   return Themes.create({
-//     title: "Variables",
-//     content: "pacvoevk evk erlvwrkv rv j",
+// SocialNetworks.sync({ force: true }).then(async () => {
+//   await SocialNetworks.create({
+//     student_id: 1,
+//     telegram: "@hellobye",
+//     instagram: "@kogochego",
+//   });
+// });
+
+// Modules.sync({ force: true }).then(async () => {
+//   await Modules.create({
+//     title: "JavaScript",
+//     color: "#FC39FE",
+//   });
+// });
+
+// StudentModules.sync({ force: true }).then(async () => {
+//   await StudentModules.create({
+//     moduleId: 1,
+//     studentId: 2,
+//   });
+// });
+
+// Statuses.sync({ force: true }).then(async () => {
+//   await Statuses.create({
+//     description: "Pending",
+//   });
+// });
+
+
+// Topics.sync({ force: true }).then(async () => {
+//   await Topics.create({
+//     title: "Var, Let, Const",
+//     description: "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ",
+//   });
+// });
+
+// Tasks.sync({ force: true }).then(async () => {
+//   await Tasks.create({
+//     title: "Task №1. Drink beer",
+//     description: "Go and drink few bottles of beer please",
+//     topic_id: 1,
+//   });
+// });
+
+
+// StudentTasks.sync({ force: true }).then(async () => {
+//   await StudentTasks.create({
+//     student_id: 1,
+//     task_id: 1,
+//     github_link: "fakelink",
+//     status_id: 1,
+//   });
+// });
+
+// Checklists.sync({ force: true }).then(async () => {
+//   await Checklists.create({
+//     title: "Checklist №1",
 //     module_id: 1,
 //   });
 // });
 
-// UsersModules.sync({ force: true }).then(function () {
-//   return UsersModules.create({
-//     user_id: 1,
-//     module_id: 1,
-//   });
-// });
-
-// Checklists.sync({ force: true }).then(function () {
-//   return Checklists.create({
-//     title: "Чек-лист №1",
-//     module_id: 1,
-//   });
-// });
-
-// themesChecklist.sync({ force: true }).then(function () {
-//   return themesChecklist.create({
+// ChecklistsTopics.sync({ force: true }).then(async () => {
+//   await ChecklistsTopics.create({
 //     checklist_id: 1,
-//     theme_id: 1,
+//     topic_id: 1,
 //   });
 // });
+
+// Laudatories.sync({ force: true }).then(async () => {});
 
 const _models = {
-  Checklists,
-  ChecklistsTopics,
-  Laudatories,
   Modules,
   SocialNetworks,
-  Statuses,
   StudentModules,
-  Students,
-  StudentTasks,
-  Tasks,
-  Topics,
   Users,
+  Students,
+  // Checklists,
+  // ChecklistsTopics,
+  // Laudatories,
+  // Statuses,
+  // StudentTasks,
+  // Tasks,
+  // Topics,
 };
 
 module.exports = _models;

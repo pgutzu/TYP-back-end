@@ -30,6 +30,7 @@ class UserControllers {
     const token = await userServices.login(body);
     return token;
   }
+
 }
 
 module.exports = new UserControllers();

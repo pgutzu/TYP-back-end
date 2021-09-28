@@ -39,8 +39,6 @@ app.use(function (req, res, next) {
 
 app.listen(port, () => console.log(`Server started on PORT ${port}`));
 
-// db.sync({ force: true });
-
 console.table([
   { name: "SERVER PORT", value: port },
   { name: "DB_PORT", value: process.env.DB_PORT },
@@ -53,6 +51,8 @@ db.authenticate()
   .then(() => console.log("DB connected!"))
   .catch((err) => console.log(err));
 
+// db.drop()
+// db.sync({force: true})
 app.use("/api", routes);
 
 module.exports = app;

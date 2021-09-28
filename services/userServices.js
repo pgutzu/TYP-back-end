@@ -1,4 +1,11 @@
-const { Users } = require("../models/_models");
+const {
+  Users,
+  StudentModules,
+  Students,
+  Tasks,
+  SocialNetworks,
+  Modules,
+} = require("../models/_models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const salt = 5;
@@ -48,7 +55,6 @@ class UserServices {
     });
   }
 
-  //сделать, чтобы возвращало обновленный объект. DONE!
   updateUser(id, body) {
     return new Promise(async (res) => {
       await Users.update(body, { where: { id } });

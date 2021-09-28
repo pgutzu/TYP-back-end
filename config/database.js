@@ -15,6 +15,7 @@ const sequelize = new Sequelize(
 module.exports = sequelize
 
 // const Checklists = require("../models/checklists");
+// Checklists.sync({force: true})
 // const Modules = require("../models/modules");
 // const SocialNetworks = require("../models/socialNetworks");
 // const Statuses = require("../models/statuses");
@@ -26,20 +27,3 @@ module.exports = sequelize
 // const StudentTasks = require("../models/studentTasks");
 // const Students = require("../models/students");
 // const Laudatories = require("../models/laudatories");
-
-// sequelize.drop()
-// sequelize.sync({force: true})
-// Users.sync({ force: true }).then(function () {
-//   return Users.create({
-//     login: "test@gmail.com",
-//     password: "test",
-//     isAdmin: true,
-//   });
-// });
-
-// Students.sync({ force: true }).then(function () {
-//   return Students.create({
-//     fullName: "test test",
-//     user_id: 1,
-//   });
-// });

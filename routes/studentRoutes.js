@@ -176,4 +176,32 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /api/students/full/{id}:
+ *  get:
+ *      summary: Get full information of a student with {id}
+ *      tags:
+ *        - Students
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          description: id of student
+ *          type: integer
+ *      responses:
+ *          '200':
+ *              description: Successfull response
+ */
+router.get("/full/:id", async (req, res) => {
+  try {
+    let data = await StudentControllers.getFullData(req.params.id);
+    res.send(data);
+  } catch (err) {
+    res.send(err);
+  }
+});
+
 module.exports = router;

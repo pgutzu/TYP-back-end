@@ -1,4 +1,4 @@
-const { Students } = require("../models/_models");
+const { Students, Modules, SocialNetworks } = require("../models/_models");
 
 class StudentServices {
   async addStudent(body) {
@@ -38,6 +38,27 @@ class StudentServices {
       } catch {
         if (err) throw err;
       }
+    });
+  }
+
+  async getFullData(id) {
+    return new Promise((res) => {
+      try {
+        Students.findAll({
+          where: { id },
+          attributes: ["fullName", "createdAt"],
+          include: [
+            {
+              model: Modules,
+              attributes: ["id", "title", "color"],
+            },
+            {
+              model: SocialNetworks,
+              attributes: ["telegram"],
+            },
+          ],
+        }).then((result) => res(result));
+      } catch {}
     });
   }
 }
