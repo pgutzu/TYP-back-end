@@ -4,6 +4,7 @@ const usersRoutes = require("./usersRoutes.js");
 const studentRoutes = require("./studentRoutes.js");
 const modulesRoutes = require("./modulesRoutes");
 const SNRoutes = require("./SNRoutes.js");
+const UserControllers = require('../controllers/userControllers')
 
 router.use("/users", usersRoutes);
 router.use("/students", studentRoutes);

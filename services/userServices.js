@@ -82,6 +82,7 @@ class UserServices {
       const user = await Users.findOne({
         where: { login },
       });
+      console.log(user)
       if (!user) {
         rej(loginFailed);
       } else {
