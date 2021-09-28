@@ -30,6 +30,11 @@ class StudentControllers {
     const data = await StudentServices.getFullData(id);
     return data;
   }
+
+  async getFullDataAll() {
+    const data = await StudentServices.getFullDataAll();
+    return data
+  }
 }
 
 module.exports = new StudentControllers();
