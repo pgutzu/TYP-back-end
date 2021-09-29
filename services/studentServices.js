@@ -61,6 +61,28 @@ class StudentServices {
       } catch {}
     });
   }
+
+  async getFullDataAll() {
+    return new Promise(async (res, rej) => {
+      try {
+        await Students.findAll({
+          attributes: ["fullName", "createdAt"],
+          include: [
+            {
+              model: Modules,
+              attributes: ["id", "title", "color"],
+            },
+            {
+              model: SocialNetworks,
+              attributes: ["telegram"],
+            },
+          ],
+        })
+          .then((result) => res(result))
+          .catch((err) => rej(err));
+      } catch {}
+    });
+  }
 }
 
 module.exports = new StudentServices();

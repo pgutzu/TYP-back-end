@@ -14,13 +14,62 @@ const StudentControllers = require("../controllers/studentControllers");
  *          '200':
  *              description: Successfull response
  */
-
-router.get("/", async (req, res) => {
+ router.get("/", async (req, res) => {
   try {
     const students = await StudentControllers.getStudents();
     res.send(students);
   } catch (err) {
     res.send(err);
+  }
+});
+
+/**
+ * @swagger
+ * /api/students/full:
+ *  get:
+ *      summary: Get full information of all students
+ *      tags:
+ *        - Students
+ *      consumes:
+ *        - application/json
+ *      responses:
+ *          '200':
+ *              description: Successfull response
+ */
+router.get("/full", async (req, res) => {
+  try {
+    let data = await StudentControllers.getFullDataAll();
+    res.send(data);
+  } catch {
+    res.send(err);
+  }
+});
+
+/**
+ * @swagger
+ * /api/students/{id}:
+ *  get:
+ *      summary: Get student with {id}
+ *      tags:
+ *        - Students
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          description: id of a student
+ *          type: integer
+ *      responses:
+ *          '200':
+ *              description: Successfull response
+ */
+router.get("/:id", async (req, res) => {
+  const student = await StudentControllers.getStudentById(req.params.id);
+  if (!student) {
+    res.sendStatus(404);
+  } else {
+    res.send(student);
   }
 });
 
@@ -75,35 +124,6 @@ router.post("/", async (req, res) => {
     res.send(newStudent);
   } catch (err) {
     res.sendStatus(500);
-  }
-});
-
-/**
- * @swagger
- * /api/students/{id}:
- *  get:
- *      summary: Get student with {id}
- *      tags:
- *        - Students
- *      consumes:
- *        - application/json
- *      parameters:
- *        - in: path
- *          name: id
- *          required: true
- *          description: id of a student
- *          type: integer
- *      responses:
- *          '200':
- *              description: Successfull response
- */
-
-router.get("/:id", async (req, res) => {
-  const student = await StudentControllers.getStudentById(req.params.id);
-  if (!student) {
-    res.sendStatus(404);
-  } else {
-    res.send(student);
   }
 });
 
