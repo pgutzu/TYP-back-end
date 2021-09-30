@@ -37,7 +37,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.listen(port, () => console.log(`Server started on PORT ${port}`));
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port, () => console.log(`Server started on PORT ${port}`));
+}
 
 console.table([
   { name: "SERVER PORT", value: port },

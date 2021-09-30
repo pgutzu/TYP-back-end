@@ -108,7 +108,7 @@ router.post("/register", async (req, res) => {
     const newUser = await UserControllers.register(req.body);
     res.send(newUser);
   } catch (err) {
-    res.sendStatus(500);
+    res.status(500).send(err);
   }
 });
 
@@ -171,7 +171,7 @@ router.put("/:id", async (req, res) => {
  */
 
 router.delete("/:id", async (req, res) => {
-  try {
+  try { 
     const deletedUser = await UserControllers.deleteUser(req.params.id);
     res.send("User deleted");
   } catch (err) {

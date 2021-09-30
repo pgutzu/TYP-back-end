@@ -28,11 +28,10 @@ class UserServices {
     try {
       let { login, password, isAdmin } = body;
       const hashedPassword = await bcrypt.hash(password, salt);
-      console.log(hashedPassword);
-      return new Promise(async (res) => {
+      return new Promise(async (res, rej) => {
         let candidate = await Users.findOne({ where: { login } }).then();
         if (candidate) {
-          res("User with this login already exists");
+          rej("User with this login already exists");
         } else {
           const newUser = Users.create({ ...body, password: hashedPassword });
           res(newUser);
@@ -98,8 +97,8 @@ class UserServices {
               );
               res({
                 isAuth: true,
-                message: 'Success',
-                token
+                message: "Success",
+                token,
               });
             } else {
               rej(loginFailed);

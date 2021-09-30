@@ -78,7 +78,7 @@ Modules.belongsToMany(Students, {
 //   });
 // });
 
-// Statuses.sync({ force: true }).then(async () => {
+// Statuses.sync({   force: true }).then(async () => {
 //   await Statuses.create({
 //     description: "Pending",
 //   });
