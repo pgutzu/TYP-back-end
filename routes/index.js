@@ -55,7 +55,7 @@ router.use("/socialNetworks", SNRoutes);
  *      - password
  */
 
-router.use("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     let token = await UserControllers.login(req.body);
     res.send(token);
