@@ -37,11 +37,11 @@ app.use(function (req, res, next) {
   next();
 });
 
-if (process.env.NODE_ENV !== "test ") {
-  app.listen(port, () => console.log(`Server started on PORT ${port}, process.env: ${process.env.NODE_ENV}`));
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port, () => console.log(`Server started on PORT ${port}, process.env:++${process.env.NODE_ENV}++`));
 }
 
-console.log(db)
+// console.log(db)
 
 db.authenticate()
   .then(() => console.log("DB connected!"))

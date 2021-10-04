@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "set NODE_ENV=test&&jest --silent",
+    "test": "jest --forceExit --detectOpenHandles --maxWorkers=1",
     "dev": "set NODE_ENV=DEV&&nodemon run"
   },
   "keywords": [],

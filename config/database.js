@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize')
 
-const sequelize = process.env.NODE_ENV == 'DEV ' ? new Sequelize(
+const sequelize = process.env.NODE_ENV == 'DEV' || "test" ? new Sequelize(
   process.env.DATABASE,
   process.env.DB_USER,
   process.env.PASSWORD,
