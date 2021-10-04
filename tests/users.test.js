@@ -2,7 +2,7 @@ const request = require("supertest");
 const app = require("../index");
 const { Users } = require("../models/_models");
 const db = Users;
-function deleteLast(database) {
+async function deleteLast(database) {
   Users.findOne({
     order: [["createdAt", "DESC"]],
     where: {},
@@ -16,7 +16,7 @@ function deleteLast(database) {
 
 describe("/api/users/", () => {
   describe("POST /api/users/register => given a proper object", () => {
-    afterEach(() => deleteLast(db));
+    afterEach(async () => await deleteLast(db));
     test("should response with a json object containing the user id", async () => {
       const response = await request(app).post("/api/users/register").send({
         login: "Supertest44",

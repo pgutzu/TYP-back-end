@@ -70,7 +70,7 @@ router.post("/", async (req, res) => {
     const result = await SMControllers.addSM(req.body);
     res.send(result);
   } catch (err) {
-    res.send(err);
+    res.status(500).send('Invalid data input');
   }
 });
 

@@ -2,9 +2,13 @@ const { StudentModules } = require("../models/_models");
 
 class SMServices {
   addSM(body) {
-    return new Promise((res) => {
-      const result = StudentModules.create(body);
-      res(result);
+    return new Promise((res, rej) => {
+      try {
+        const result = StudentModules.create(body);
+        res(result);
+      } catch {
+        if (err) throw err;
+      }
     });
   }
 
