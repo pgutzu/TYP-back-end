@@ -17,8 +17,9 @@ async function deleteLast(database) {
 describe("/api/users/", () => {
   describe("POST /api/users/register => given a proper object", () => {
     afterEach(async () => await deleteLast(db));
+    const connect = request(app)
     test("should response with a json object containing the user id", async () => {
-      const response = await request(app).post("/api/users/register").send({
+      const response = await connect.post("/api/users/register").send({
         login: "Supertest44",
         password: "Supertest",
         isAdmin: false,
@@ -26,7 +27,7 @@ describe("/api/users/", () => {
       expect(response.body.id).toBeDefined();
     });
     test("should response with 200 status code", async () => {
-      const response = await request(app).post("/api/users/register").send({
+      const response = await connect.post("/api/users/register").send({
         login: "Supertest34",
         password: "Supertest2",
         isAdmin: false,
@@ -35,8 +36,9 @@ describe("/api/users/", () => {
     });
   });
   describe("POST /api/users/register => when some kind of information is missing", () => {
+    const connect = request(app)
     test("should response with 500 statuscode", async () => {
-      const response = await request(app).post("/api/users/register").send({
+      const response = await connect.post("/api/users/register").send({
         login: "Supertest",
         lastName: "Superlastname",
         isAdmin: false,
@@ -45,14 +47,15 @@ describe("/api/users/", () => {
     });
   });
   describe("POST /api/users/register => when user already exists", () => {
+    const connect = request(app)
     test(`should response with status 500 and user 'already exists' message`, async () => {
-      await request(app).post("/api/users/register").send({
+      await connect.post("/api/users/register").send({
         login: "Supertest",
         lastName: "Superlastname",
         isAdmin: false,
       });
       setTimeout(async () => {
-        await request(app).post("/api/users/register").send({
+        await rconnect.post("/api/users/register").send({
           login: "Supertest",
           lastName: "Superlastname",
           isAdmin: false,

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "set NODE_ENV= test && jest --silent",
-    "dev": "set NODE_ENV= DEV && nodemon run"
+    "test": "set NODE_ENV=test&&jest --silent",
+    "dev": "set NODE_ENV=DEV&&nodemon run"
   },
   "keywords": [],
   "author": "",

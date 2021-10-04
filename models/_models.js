@@ -74,7 +74,7 @@ Modules.belongsToMany(Students, {
 // StudentModules.sync({ force: true }).then(async () => {
 //   await StudentModules.create({
 //     moduleId: 1,
-//     studentId: 2,
+//     studentId: 1,
 //   });
 // });
 

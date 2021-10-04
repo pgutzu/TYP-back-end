@@ -16,30 +16,31 @@ async function deleteLast(database) {
     );
 }
 async function createUser() {
-  await Users.create({
+  return await Users.create({
     login: "sssuuuuup",
     password: "ssssuuuup",
     isAdmin: false,
   });
 }
 async function createModule() {
-  await Modules.create({
+  return await Modules.create({
     title: "SUUUUUP",
     color: "#SUUUP",
   });
 }
 async function createStudent() {
-  await Students.create({
+  return await Students.create({
     fullName: "Suuup Suuuup",
     user_id: lastUser.id,
   });
 }
 
 describe("STUDENTS creating", () => {
+  const connect = request(app);
   describe("When User already exists ", () => {
     const lastUser = createUser();
     test("Should response with 200 status code", async () => {
-      const response = await request(app).post("/api/students").send({
+      const response = await connect.post("/api/students").send({
         fullName: "Supertest34",
         user_id: lastUser.id,
       });
@@ -49,7 +50,7 @@ describe("STUDENTS creating", () => {
   });
   describe("When user with such id not created", () => {
     test("should response with status 500", async () => {
-      const response = await request(app).post("/api/students").send({
+      const response = await connect.post("/api/students").send({
         fullName: "Supertest34",
         user_id: 11293824776,
       });
@@ -59,10 +60,11 @@ describe("STUDENTS creating", () => {
 });
 
 describe("SOCIAL NETWORKS creating", () => {
+  const connect = request(app);
   describe("When student already exists", () => {
     const lastUser = createUser();
     test("Should response with status 200", async () => {
-      const response = await request(app).post("/api/socialNetworks").send({
+      const response = await connect.post("/api/socialNetworks").send({
         instagram: "@pgutzu",
         telegram: "@pgutzu",
         student_id: lastUser.id,
@@ -73,7 +75,7 @@ describe("SOCIAL NETWORKS creating", () => {
   });
   describe("When student with such id not created", () => {
     test("should response with status 500", async () => {
-      const response = await request(app).post("/api/students").send({
+      const response = await connect.post("/api/students").send({
         fullName: "Supertest34",
         user_id: 11293824776,
       });
@@ -83,12 +85,13 @@ describe("SOCIAL NETWORKS creating", () => {
 });
 
 describe("STUDENT_MODULES creating", () => {
+  const connect = request(app);
   describe("When student and module already exists", () => {
-    const lastUser = createUser().then();
-    let lastModule = createModule().then();
-    let lastStudent = createStudent().then();
+    const lastUser = createUser();
+    let lastModule = createModule();
+    let lastStudent = createStudent();
     test("Should response with status 200 and obj containing StudentModule id", async () => {
-      const response = await request(app).post("/api/studentmodules").send({
+      const response = await connect.post("/api/studentmodules").send({
         moduleId: lastModule.id,
         studentId: lastStudent.id,
       });
@@ -97,12 +100,13 @@ describe("STUDENT_MODULES creating", () => {
       // await deleteLast(Students);
       // await deleteLast(Users);
       expect(response.statusCode).toBe(200);
-      expect(response.body.id).toBeDefined();
+      e;
+      xpect(response.body.id).toBeDefined();
     });
   });
   describe("When such user not exists", () => {
     test("Should response with status 500", async () => {
-      const response = await request(app).post("/api/studentmodules").send({
+      const response = await connect.post("/api/studentmodules").send({
         moduleId: 1,
         studentId: 213812465126378,
       });
@@ -111,7 +115,7 @@ describe("STUDENT_MODULES creating", () => {
   });
   describe("When such module not exists", () => {
     test("Should response with status 500", async () => {
-      const response = await request(app).post("/api/studentmodules").send({
+      const response = await connect.post("/api/studentmodules").send({
         moduleId: 112312647139210,
         studentId: 1,
       });
