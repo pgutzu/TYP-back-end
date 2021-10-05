@@ -62,7 +62,7 @@ describe("STUDENTS creating", () => {
     test("should response with status 500", async () => {
       const response = await connect.post("/api/students").send({
         fullName: "Supertest34",
-        user_id: 11293824776,
+        user_id: 112938224776,
       });
       expect(response.statusCode).toBe(500);
     });

@@ -15,7 +15,7 @@ async function deleteLast(database) {
       })
     );
 }
-jest.setTimeout(60000);
+jest.setTimeout(60000); 
 describe("STUDENT_MODULES creating", () => {
   const connect = request(app);
   describe("When student and module already exists", () => {

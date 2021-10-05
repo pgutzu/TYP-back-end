@@ -13,7 +13,7 @@ async function deleteLast(database) {
     })
   );
 }
-jest.setTimeout(60000);
+jest.setTimeout(60001);
 const connect = request(app);
 
 console.log(process.env.NODE_ENV);
