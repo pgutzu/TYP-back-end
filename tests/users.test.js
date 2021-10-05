@@ -50,6 +50,11 @@ describe("/api/users/", () => {
   });
   describe("POST /api/users/register => when user already exists", () => {
     test(`should response with status 500 and 'user already exists' message`, async () => {
+      await Users.create({
+        login: "USERSCONNECT",
+        password: "USERSCONNECT",
+        isAdmin: false,
+      });
       let lastUser = await Users.findOne({
         order: [["createdAt", "DESC"]],
         where: {},
