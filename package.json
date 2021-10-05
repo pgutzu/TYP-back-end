@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --forceExit --detectOpenHandles --maxWorkers=1",
-    "dev": "set NODE_ENV=DEV&&nodemon run"
+    "dev": "set NODE_ENV=DEV&&nodemon run",
+    "clean": "set NODE_ENV=DEV&&node helpers/DBCleaner.js",
+    "fill": "set NODE_ENV=DEV&&node helpers/DBFiller.js"
   },
   "keywords": [],
   "author": "",
