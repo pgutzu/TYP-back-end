@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const UserControllers = require("../controllers/userControllers");
-
+const { body, validationResult } = require("express-validator");
+const Validator = require('../helpers/validator')
 /**
  * @swagger
  * /api/users:
@@ -103,14 +104,24 @@ router.get("/:id", async (req, res) => {
  *      - isAdmin
  */
 
-router.post("/register", async (req, res) => {
-  try {
-    const newUser = await UserControllers.register(req.body);
-    res.send(newUser);
-  } catch (err) {
-    res.status(500).send(err);
+router.post(
+  "/register",Validator.validateLogin(),async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).send({
+        success: false,
+        errors: errors.array(),
+      });
+    } else {
+      try {
+        const newUser = await UserControllers.register(req.body);
+        res.send(newUser);
+      } catch (err) {
+        res.status(500).send(err);
+      }
+    }
   }
-});
+);
 
 /**
  * @swagger
@@ -171,7 +182,7 @@ router.put("/:id", async (req, res) => {
  */
 
 router.delete("/:id", async (req, res) => {
-  try { 
+  try {
     const deletedUser = await UserControllers.deleteUser(req.params.id);
     res.send("User deleted");
   } catch (err) {

@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const SNControllers = require("../controllers/SNControllers");
-
+const Validator = require("../helpers/validator");
+const { body, validationResult } = require("express-validator");
 /**
  * @swagger
  * /api/socialNetworks/{id}:
@@ -65,12 +66,20 @@ router.get("/:id", async (req, res) => {
  *            example: "Could not add Section"
  */
 
-router.post("/", async (req, res) => {
-  try {
-    const result = await SNControllers.addSN(req.body);
-    res.send(result);
-  } catch (err) {
-    res.send(err);
+router.post("/", Validator.validateSN(), async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).send({
+      success: false,
+      errors: errors.array(),
+    });
+  } else {
+    try {
+      const result = await SNControllers.addSN(req.body);
+      res.send(result);
+    } catch (err) {
+      res.send(err);
+    }
   }
 });
 
