@@ -38,13 +38,20 @@ app.use(function (req, res, next) {
 });
 
 if (process.env.NODE_ENV !== "test") {
-  app.listen(port, () => console.log(`Server started on PORT ${port}, process.env:++${process.env.NODE_ENV}++`));
+  app.listen(port, () =>
+    console.log(
+      `Server started on PORT ${port}, process.env:++${process.env.NODE_ENV}++`
+    )
+  );
 }
 
+console.log(db);
 
 db.authenticate()
   .then(() => console.log("DB connected!"))
   .catch((err) => console.log(err));
+
+console.log(db);
 
 app.use("/api", routes);
 
