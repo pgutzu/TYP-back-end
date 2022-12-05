@@ -3,6 +3,7 @@ const app = express();
 require("dotenv").config();
 const port = process.env.PORT || 3000;
 const routes = require("./routes/index");
+const db = require("./config/database");
 const bodyParser = require("body-parser");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
@@ -10,12 +11,8 @@ const swaggerOptions = {
   swaggerDefinition: {
     info: {
       title: "TYP API",
-      description: "TYP-web API",
-      contact: {
-        name: "Kiryl Sachuk",
-        email: "ownfrezzy@gmail.com",
-      },
-      servers: ["http://localhost:3300"],
+      description: "Track Your Progress API",
+      servers: ["http://localhost:3000"],
       version: "1.0.1",
     },
   },
@@ -25,7 +22,7 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -40,7 +37,21 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.listen(port, () => console.log(`Server started on PORT ${port}`));
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port, () =>
+    console.log(
+      `Server started on PORT ${port}, process.env:++${process.env.NODE_ENV}++`
+    )
+  );
+}
+
+console.log(db);
+
+db.authenticate()
+  .then(() => console.log("DB connected!"))
+  .catch((err) => console.log(err));
+
+console.log(db);
 
 app.use("/api", routes);
 
